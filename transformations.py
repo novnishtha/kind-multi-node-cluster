@@ -40,9 +40,9 @@ entertainment_2018_df = transactions_with_date \
     .groupBy("cust_id") \
     .agg({"amt": "sum"}) \
     .withColumnRenamed("sum(amt)", "total_entertainment_spend")
-entertainment_2018_df.show(5)
+entertainment_2018_df.show(7)
 end_time_entertainment = time.time()
-print(f"Time taken for 'Entertainment' analysis: {end_time_entertainment - start_time_entertainment:.2f} seconds")  #8.49 sec
+print(f"Time taken for 'Entertainment' analysis: {end_time_entertainment - start_time_entertainment:.2f} seconds")  #7.62 sec
 
 # Time tracking for 'Gambling' analysis
 print("\n--- Finding Top Gambling Spenders ---")
@@ -54,13 +54,12 @@ top_gamb_spenders_df = transactions_with_date.filter(col("expense_type") == "Gam
     .orderBy(col("total_gamb_spend").desc())
 top_gamb_spenders_df.show(5)
 end_time_gamb_spenders = time.time()
-print(f"Time taken for 'Gambling' analysis: {end_time_gamb_spenders - start_time_gamb_spenders:.2f} seconds")   #8.27 sec
+print(f"Time taken for 'Gambling' analysis: {end_time_gamb_spenders - start_time_gamb_spenders:.2f} seconds")   #3.33 sec
 
 # Time tracking for 'Average Monthly Spending' analysis
 print("\n--- Calculating Average Monthly Spending ---")
 start_time_avg_monthly_spend = time.time()
-avg_monthly_spend_df = transactions_with_date.withColumn("year", year(col("date"))) \
-    .withColumn("month", col("date").substr(6, 2)) \
+avg_monthly_spend_df = transactions_with_date\
     .groupBy("cust_id", "year", "month") \
     .agg({"amt": "sum"}) \
     .withColumnRenamed("sum(amt)", "monthly_spend") \
@@ -69,7 +68,7 @@ avg_monthly_spend_df = transactions_with_date.withColumn("year", year(col("date"
     .withColumnRenamed("avg(monthly_spend)", "average_monthly_spend")
 avg_monthly_spend_df.show(5)
 end_time_avg_monthly_spend = time.time()
-print(f"Time taken for 'Average Monthly Spending' analysis: {end_time_avg_monthly_spend - start_time_avg_monthly_spend:.2f} seconds")   #39.05 sec
+print(f"Time taken for 'Average Monthly Spending' analysis: {end_time_avg_monthly_spend - start_time_avg_monthly_spend:.2f} seconds")   #46.00 sec
 
 # Time tracking for the 'Join and Aggregate' analysis
 print("\n--- Joining Transactions with Customers and Aggregating ---")
@@ -80,14 +79,14 @@ start_count_time = time.time()
 print(f"\n--- The Joint DF has {customers_with_transactions.count()} rows. --- ")
 #customers_with_transactions.show()
 end_count_time = time.time()
-print(f"Time taken for Count of rows: {end_count_time - start_count_time:.2f} seconds")   #
+print(f"Time taken for Count of rows: {end_count_time - start_count_time:.2f} seconds")   #3.00 sec
 
 total_spend_over_30 = customers_with_transactions.filter(col("age") > 30) \
     .agg({"amt": "sum"}) \
     .withColumnRenamed("sum(amt)", "total_spend_for_over_30")
 total_spend_over_30.show()
 end_time_join = time.time()
-print(f"Time taken for 'Join and Aggregate' analysis: {end_time_join - start_time_join:.2f} seconds")   #4.65 sec
+print(f"Time taken for 'Join and Aggregate' analysis: {end_time_join - start_time_join:.2f} seconds")   #7.01 sec
 
 # Time tracking for 'Top Cities' analysis
 print("\n--- Finding Top 3 Cities by Spend ---")
@@ -99,7 +98,7 @@ top_cities_by_spend = transactions_with_date.groupBy("city") \
     .limit(3)
 top_cities_by_spend.show()
 end_time_top_cities = time.time()
-print(f"Time taken for 'Top 3 Cities' analysis: {end_time_top_cities - start_time_top_cities:.2f} seconds")    #4.14 sec
+print(f"Time taken for 'Top 3 Cities' analysis: {end_time_top_cities - start_time_top_cities:.2f} seconds")    #3.80 sec
 
 time.sleep(300)
 # Stop Spark Session
