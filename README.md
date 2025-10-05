@@ -108,7 +108,7 @@ Then open http://localhost:4040 in your browser.
 - In all manifests, adjust executor cores/memory as needed:
   - `spark.executor.instances`, `spark.executor.cores`, `spark.executor.memory`
   - For dynamic allocation: `spark.dynamicAllocation.*`
-- Also can set any types of configurations in these manifests itself.
+- Also can set any types of configurations in these manifests itself or create a new one and make the changes in the "args" section.
 
 ## Cleanup
 ```
