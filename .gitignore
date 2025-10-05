@@ -1,0 +1,16 @@
+# Dependency and Compilation Artifacts
+__pycache__/
+*.pyc
+venv/
+.pytest_cache/
+
+# IDE and System Files (The "Ignore My Mess" Section)
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Temporary & Log Files
+*.log
+spark-warehouse/
+target/
