@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-notaqe-job
+spec:
+  template:
+    spec:
+      serviceAccountName: spark
+      containers:
+      - name: spark-submit
+        image: pyspark-jobs
+        imagePullPolicy: Never
+        command: ["/opt/spark/bin/spark-submit"]
+        args:
+        - "--master"
+        - "k8s://https://kubernetes.default.svc.cluster.local:443"
+        - "--deploy-mode"
+        - "cluster"
+        - "--name"
+        - "transformations_notaqe"
+        - "--conf"
+        - "spark.kubernetes.container.image=pyspark-jobs:latest"
+        - "--conf"
+        - "spark.kubernetes.authenticate.driver.serviceAccountName=spark"
+        - "--conf"
+        - "spark.dynamicAllocation.enabled=true"
+        - "--conf"
+        - "spark.dynamicAllocation.shuffleTracking.enabled=true"
+        - "--conf"
+        - "spark.dynamicAllocation.initialExecutors=1" # New Safety Measure
+        - "--conf"
+        - "spark.dynamicAllocation.minExecutors=1"
+        - "--conf"
+        - "spark.dynamicAllocation.maxExecutors=3"
+        - "--conf"
+        - "spark.executor.cores=1"
+        - "--conf"
+        - "spark.executor.memory=1g" # Reduced for System Stability
+        - "--conf"
+        - "spark.sql.adaptive.enabled=false"
+        - "local:///app/transformations.py"
+      restartPolicy: Never

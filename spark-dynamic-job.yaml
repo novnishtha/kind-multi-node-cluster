@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-dynamic-job
+spec:
+  template:
+    spec:
+      serviceAccountName: spark # THIS IS THE CRITICAL NEW LINE
+      containers:
+      - name: spark-submit
+        image: pyspark-jobs:latest
+        imagePullPolicy: Never
+        command: ["/opt/spark/bin/spark-submit"]
+        args:
+        - "--master"
+        - "k8s://https://kubernetes.default.svc.cluster.local:443"
+        - "--deploy-mode"
+        - "cluster"
+        - "--name"
+        - "fully-containerized-app"
+        - "--conf"
+        - "spark.kubernetes.container.image=pyspark-jobs:latest"
+        - "--conf"
+        - "spark.kubernetes.authenticate.driver.serviceAccountName=spark"
+        - "--conf"
+        - "spark.dynamicAllocation.enabled=true"
+        - "--conf"
+        - "spark.dynamicAllocation.shuffleTracking.enabled=true"
+        - "--conf"
+        - "spark.dynamicAllocation.minExecutors=1"
+        - "--conf"
+        - "spark.dynamicAllocation.maxExecutors=3"
+        - "--conf"
+        - "spark.executor.cores=1"
+        - "--conf"
+        - "spark.executor.memory=1g"
+        - "local:///app/transformations.py"
+      restartPolicy: Never
