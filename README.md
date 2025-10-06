@@ -123,3 +123,13 @@ kind delete cluster
 ## Notes
 - The base image is `spark:latest` and Python dependencies are installed from `requirements.txt`.
 - If you want to run the script locally (outside containers), update the file paths in `transformations.py` or ensure the data is available under `/app/data_skew/` via a bind mount.
+
+## 👥 Collaborators
+
+A big thanks to all the collaborators who contributed to this project:
+
+- [Nishtha](https://github.com/novnishtha)
+- [Shivansh](https://github.com/sh1vanshgaur)
+- [Pulkit](https://github.com/pulkitjn3010)
+- [Anuj](https://github.com/animus08)
+- [Riya](https://github.com/Riyag012)
