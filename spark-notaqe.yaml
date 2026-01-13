@@ -27,13 +27,13 @@ spec:
         - "--conf"
         - "spark.dynamicAllocation.shuffleTracking.enabled=true"
         - "--conf"
-        - "spark.dynamicAllocation.initialExecutors=1" # New Safety Measure
+        - "spark.dynamicAllocation.initialExecutors=1" # Safety Measure
         - "--conf"
         - "spark.dynamicAllocation.minExecutors=1"
         - "--conf"
         - "spark.dynamicAllocation.maxExecutors=3"
         - "--conf"
-        - "spark.executor.cores=1"
+        - "spark.executor.cores=2"
         - "--conf"
         - "spark.executor.memory=1g" # Reduced for System Stability
         - "--conf"
