@@ -8,7 +8,7 @@ spec:
       serviceAccountName: spark # THIS IS THE CRITICAL NEW LINE
       containers:
       - name: spark-submit
-        image: pyspark-jobs:latest
+        image: nishtha304/pyspark-jobs:latest
         imagePullPolicy: Never
         command: ["/opt/spark/bin/spark-submit"]
         args:
@@ -19,11 +19,11 @@ spec:
         - "--name"
         - "spark-job-transformations"
         - "--conf"
-        - "spark.kubernetes.container.image=pyspark-jobs:latest"
+        - "spark.kubernetes.container.image=nishtha304/pyspark-jobs:latest"
         - "--conf"
         - "spark.kubernetes.authenticate.driver.serviceAccountName=spark"
         - "--conf"
-        - "spark.executor.instances=3"
+        - "spark.executor.instances=5"
         - "--conf"
         - "spark.executor.cores=1"
         - "--conf"
