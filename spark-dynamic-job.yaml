@@ -27,7 +27,7 @@ spec:
         - "--conf"
         - "spark.dynamicAllocation.shuffleTracking.enabled=true"
         - "--conf"
-        - "spark.dynamicAllocation.initialExecutors=1" # New Safety Measure
+        - "spark.dynamicAllocation.initialExecutors=1" # Safety Measure --> idle executors are killed by driver
         - "--conf"
         - "spark.dynamicAllocation.minExecutors=1"
         - "--conf"
