@@ -55,8 +55,12 @@ kubectl apply -f rbac.yaml
 ```
 
 3) Load the image into the Kind cluster (imagePullPolicy is `Never`):
+
+   OR Can also use pre-built Docker Image (nishtha304/pyspark-jobs:latest)
 ```
 kind load docker-image pyspark-jobs:latest
+
+kind load docker-image nishtha304/pyspark-jobs:latest
 ```
 
 4) Submit a Spark job (choose any ONE of the following at a time):
